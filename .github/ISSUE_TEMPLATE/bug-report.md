@@ -1,6 +1,6 @@
 ---
-name: Hermes
-about: Report an issue with Hermes
+name: hermes-channel
+about: Report an issue with hermes-channel
 title: ''
 labels: bug
 assignees: ''

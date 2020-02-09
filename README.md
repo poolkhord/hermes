@@ -1,4 +1,4 @@
-# Hermes
+# hermes-channel
 
 Client-side messaging channel for sending data from one browser tab to another with the same origin. Think of it as a PubSub module that can send messages across multiple browser tabs.
 
