@@ -1,6 +1,33 @@
+[![NPM](https://nodei.co/npm/hermes-channel.png)](https://nodei.co/npm/hermes-channel/)
+
+[![install size](https://packagephobia.now.sh/badge?p=hermes-channel)](https://packagephobia.now.sh/result?p=hermes-channel) [![dependencies](https://david-dm.org/hosseinmd/hermes-channel.svg)](https://david-dm.org/hosseinmd/hermes-channel.svg)
+
 # hermes-channel
 
 Client-side messaging channel for sending data from one browser tab to another with the same origin. Think of it as a PubSub module that can send messages across multiple browser tabs.
+
+
+## TOC
+
+- [Install](#Install)
+- [Import](#Import)
+- [APIs](#API)
+
+## Install
+
+```npm
+npm i hermes --save
+```
+
+```npm
+yarn add hermes
+```
+
+## Import
+
+```javascript
+import hermes from "hermes-channel";
+```
 
 ## API
 
