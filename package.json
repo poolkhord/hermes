@@ -1,6 +1,6 @@
 {
   "name": "hermes-channel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Messaging channel between tabs",
   "license": "MIT",
   "author": "Hossein Mohammadi <hosseinm.developer@gmail.com> (https://github.com/hosseinmd/)",
