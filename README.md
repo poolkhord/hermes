@@ -4,8 +4,7 @@
 
 # hermes-channel
 
-Client-side messaging channel for sending data from one browser tab to another with the same origin. Think of it as a PubSub module that can send messages across multiple browser tabs.
-
+A messaging channel for sending data between specific topic listeners. This works between browsing contexts (that is, windows, tabs, frames, or iframes) and workers of the same origin.
 
 ## TOC
 
@@ -38,9 +37,9 @@ import hermes from "hermes-channel";
   - `includeSelf` (optional, default=false): A boolean indicating whether the data should also be sent to the current tab.
 
   ```js
-  hermes.send('some-topic', 'hello world');
-  hermes.send('some-topic', {title: 'awesome'});
-  hermes.send('some-topic', {title: 'awesome'}, true);
+  hermes.send("some-topic", "hello world");
+  hermes.send("some-topic", { title: "awesome" });
+  hermes.send("some-topic", { title: "awesome" }, true);
   ```
 
 - **`on(topic, callback)`**: Add a callback function for a specified topic.
@@ -49,7 +48,7 @@ import hermes from "hermes-channel";
   - `callback`: The callback function, which accepts a single argument representing the data that was sent originally.
 
   ```js
-  hermes.on('some-topic', function(data) {});
+  hermes.on("some-topic", function(data) {});
   ```
 
 - **`off(topic, [callback])`**: Remove a callback function for a specified topic.
@@ -58,6 +57,6 @@ import hermes from "hermes-channel";
   - `callback` (optional): The callback function to remove, or don't provide in order to remove all callback functions for the `topic` topic.
 
   ```js
-  hermes.off('some-topic', callbackFunction);
-  hermes.off('some-topic');
+  hermes.off("some-topic", callbackFunction);
+  hermes.off("some-topic");
   ```
