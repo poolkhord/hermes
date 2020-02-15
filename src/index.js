@@ -145,17 +145,15 @@ function localStorageApiFactory() {
 }
 
 function emptyApiFactory() {
-  /*
-   *  When the browser does not support any of the APIs that we're using
-   *  for messaging, just present an empty api that does just gives
-   *  warnings regarding the lack of support.
-   */
+  console.warn("Communication between browsing contexts is not supported.");
 
-  function noop() {
-    console.warn("Hermes messaging is not supported.");
+  function send(topic, data) {
+    if (includeSelf) {
+      broadcast(topic, data);
+    }
   }
 
-  return { on: noop, off: noop, send: noop };
+  return { on, off, send };
 }
 
 function apiFactory() {
