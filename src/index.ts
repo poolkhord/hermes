@@ -1,27 +1,30 @@
-const callbacks = {};
+const callbacks: {
+  [name: string]: ((data: any) => void)[];
+} = {};
 
-function on(topic, callback) {
+function on(topic: string, callback: (data: any) => void) {
   if (!(topic in callbacks)) {
     callbacks[topic] = [];
   }
   callbacks[topic].push(callback);
 }
 
-function off(topic, callback) {
+function off(topic: string, callback: any) {
   if (topic in callbacks) {
     if (typeof callback === "function") {
       const index = callbacks[topic].indexOf(callback);
       callbacks[topic].splice(index, 1);
     }
+
     if (typeof callback !== "function" || callbacks[topic].length === 0) {
       delete callbacks[topic];
     }
   }
 }
 
-function broadcast(topic, data) {
+function broadcast(topic: string, data: any) {
   if (topic in callbacks) {
-    callbacks[topic].forEach(callback => callback(data));
+    callbacks[topic].forEach((callback: (arg0: any) => any) => callback(data));
   }
 }
 
@@ -36,9 +39,9 @@ function broadcastChannelApiFactory() {
    */
 
   const channel = new BroadcastChannel("hermes");
-  channel.onmessage = e => broadcast(e.data.topic, e.data.data);
+  channel.onmessage = (e) => broadcast(e.data.topic, e.data.data);
 
-  function send(topic, data, includeSelf = false) {
+  function send(topic: any, data: any, includeSelf = false) {
     channel.postMessage({ topic, data });
     if (includeSelf) {
       broadcast(topic, data);
@@ -60,14 +63,15 @@ function sharedWorkerApiFactory() {
    *  Support table for SharedWorker: http://caniuse.com/#feat=sharedworkers
    */
 
+  //@ts-ignore
   const workerPath = require("./hermes-worker");
 
   const worker = new SharedWorker(workerPath, "hermes");
 
   worker.port.start();
-  worker.port.onmessage = e => broadcast(e.data.topic, e.data.data);
+  worker.port.onmessage = (e) => broadcast(e.data.topic, e.data.data);
 
-  function send(topic, data, includeSelf = false) {
+  function send(topic: string, data: any, includeSelf = false) {
     worker.port.postMessage({ topic, data });
     if (includeSelf) {
       broadcast(topic, data);
@@ -89,9 +93,9 @@ function localStorageApiFactory() {
 
   const storage = window.localStorage;
   const prefix = "__hermes:";
-  const queue = {};
+  const queue: { [topic: string]: any[] } = {};
 
-  function send(topic, data, includeSelf = false) {
+  function send(topic: string, data: any, includeSelf = false) {
     const key = prefix + topic;
     if (storage.getItem(key) === null) {
       storage.setItem(key, JSON.stringify(data));
@@ -115,18 +119,18 @@ function localStorageApiFactory() {
     }
   }
 
-  window.addEventListener("storage", e => {
+  window.addEventListener("storage", (e) => {
     if (!e.key) {
       return;
     }
     if (e.key.indexOf(prefix) === 0 && e.oldValue === null) {
       const topic = e.key.replace(prefix, "");
-      const data = JSON.parse(e.newValue);
+      const data = e.newValue && JSON.parse(e.newValue);
       broadcast(topic, data);
     }
   });
 
-  window.addEventListener("storage", e => {
+  window.addEventListener("storage", (e) => {
     if (!e.key) {
       return;
     }
@@ -147,7 +151,7 @@ function localStorageApiFactory() {
 function emptyApiFactory() {
   console.warn("Communication between browsing contexts is not supported.");
 
-  function send(topic, data) {
+  function send(topic: string, data: any, includeSelf = false) {
     if (includeSelf) {
       broadcast(topic, data);
     }
