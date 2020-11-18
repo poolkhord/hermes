@@ -4,6 +4,7 @@ node_modules/
 .eslintrc.*
 .gitignore
 .prettierrc
+.prettierignore
 .DS_Store
 .cache
 .vscode
