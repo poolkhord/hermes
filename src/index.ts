@@ -9,7 +9,7 @@ function on(topic: string, callback: (data: any) => void) {
   callbacks[topic].push(callback);
 }
 
-function off(topic: string, callback: any) {
+function off(topic: string, callback?: (data: any) => void) {
   if (topic in callbacks) {
     if (typeof callback === "function") {
       const index = callbacks[topic].indexOf(callback);
